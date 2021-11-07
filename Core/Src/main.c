@@ -104,7 +104,7 @@ int main(void)
 	    Error_Handler();
 	  }
 	  HAL_GPIO_TogglePin(GPIOC,LED_RED_Pin);
-	  HAL_Delay((uint32_t)500);
+	  HAL_Delay((uint32_t)1000);
 	  HAL_GPIO_TogglePin(GPIOC,LED_RED_Pin);
 /*	  HAL_GPIO_TogglePin(GPIOC,LED_GREEN_Pin); */
 /*	  HAL_Delay((uint32_t)500); */
