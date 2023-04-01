@@ -19,6 +19,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include <stdio.h>
+#include <string.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -45,8 +47,9 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 
 /* Buffer used for transmission */
-uint8_t aTxBuffer[] = " **** UART3 Xmitting ****  **** UART3 Transmitting ****  **** UART3 Xmitting **** ";
-
+uint8_t aTxBuffer[32];
+uint8_t const char_Line[] = "Line # ";
+uint8_t const CR_LF[] = "\r\n";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +72,9 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+unsigned int ui_line_count = 0;
+int i_r = 0;
+void * p_v = NULL;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -99,7 +104,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_UART_Transmit(&huart3, (uint8_t *)aTxBuffer, sizeof(aTxBuffer), 5000) != HAL_OK)
+	  p_v = memset((void*)aTxBuffer,'\0',sizeof(aTxBuffer));
+	  i_r = sprintf((char*)aTxBuffer,"%s %08x%s",char_Line,ui_line_count++,CR_LF);
+	  if(HAL_UART_Transmit(&huart3, (uint8_t *)aTxBuffer, i_r, 5000) != HAL_OK)
 	  {
 	    Error_Handler();
 	  }
