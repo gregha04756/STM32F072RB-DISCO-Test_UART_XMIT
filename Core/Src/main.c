@@ -49,7 +49,7 @@ UART_HandleTypeDef huart3;
 /* Buffer used for transmission */
 uint8_t aTxBuffer[32];
 uint8_t const char_Line[] = "Line # ";
-uint8_t const MYCR = '\r';
+uint8_t const MYCR = 0x0D;
 uint8_t const MYLF = '\n';
 /* USER CODE END PV */
 
@@ -106,7 +106,7 @@ void * p_v = NULL;
   while (1)
   {
 	  p_v = memset((void*)aTxBuffer,'\0',sizeof(aTxBuffer));
-	  i_r = sprintf((char*)aTxBuffer,"%s %08x%c%c",char_Line,ui_line_count++,MYCR,MYLF);
+	  i_r = sprintf((char*)aTxBuffer,"%s %08x%c",char_Line,ui_line_count++,MYCR);
 	  if(HAL_UART_Transmit(&huart3, (uint8_t *)aTxBuffer, i_r, 5000) != HAL_OK)
 	  {
 	    Error_Handler();
